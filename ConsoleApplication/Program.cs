@@ -12,11 +12,11 @@ namespace ConsoleApplication
             Console.WriteLine("indtast x:");
             string x = Console.ReadLine();
             int talX;
-            if (!int.TryParse(x, out talX)
+            if (!int.TryParse(x, out talX))
             {
                 Console.WriteLine("pröv igen med et tal");
-                y = Console.ReadLine();
-                if (!int.TryParse(x, out talX)
+                x = Console.ReadLine();
+                if (!int.TryParse(x, out talX))
                 {
                     Console.WriteLine("fejl igen");
                     return;
@@ -27,11 +27,11 @@ namespace ConsoleApplication
             Console.WriteLine("indtast y:");
             string y = Console.ReadLine();
             int talY;
-           if (!int.TryParse(y, out talY)
+           if (!int.TryParse(y, out talY))
            {
                 Console.WriteLine("pröv igen med et tal");
                 y = Console.ReadLine();
-                if (!int.TryParse(y, out talY)
+                if (!int.TryParse(y, out talY))
                 {
                     Console.WriteLine("fejl igen");
                     return;
