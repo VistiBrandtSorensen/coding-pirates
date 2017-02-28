@@ -9,7 +9,7 @@ namespace ConsoleApplication
     {
         public static void Main(string[] args)
         {
-            Lektion_3.Run();
+            Lektion_4.Run();
         }
     }
 }

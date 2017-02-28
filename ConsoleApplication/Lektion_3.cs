@@ -17,7 +17,7 @@ namespace ConsoleApplication
             string y = Console.ReadLine();
             float talY;
 
-            Console.WriteLine("Plus, minus, gange eller divider");
+            Console.WriteLine("Plus, minus, gange, divider, pi eller procent");
             string plus = Console.ReadLine();
             if (!float.TryParse(x, out talX))
             {
