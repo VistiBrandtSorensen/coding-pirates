@@ -52,8 +52,8 @@ namespace ConsoleApplication
                 : shipX;
                 int y = isHorizontal
                 ? shipY
-                : shipY;
-                board[shipX][shipY] = true;
+                : shipY + i;
+                board[x][y] = true;
             }
 
             bool isHit = false;
