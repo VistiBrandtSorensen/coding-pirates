@@ -2,6 +2,10 @@ namespace mar14
 {
     class Player
     {
+
+        public string name;
+        bool isFirstPlayerTurn = true;
+
          public bool[][] board;
          public char[][] shots;
 

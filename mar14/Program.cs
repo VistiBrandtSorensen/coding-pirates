@@ -6,95 +6,88 @@ namespace mar14
     {
         public static void Main(string[] args)
         {
-            var player = new Player();
             
+            var player1 = new Player();
+            var player2 = new Player();
     
 
             // æøå
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
 
-
-            // Console.WriteLine("Hvor stor skal spillepladen være (4-9)");
-            // int boardSize = int.Parse(Console.ReadLine());
-            // while (boardSize < 4 || boardSize > 9)
-            // {
-            //     Console.WriteLine("Ugyldig størrelse, prøv igen");
-            //     boardSize = int.Parse(Console.ReadLine());
-            // }
-
             int boardSize = 9;
-
-            // var board = new bool[boardSize][];
-            // var shots = new char[boardSize] [];
-            // for (int i = 0; i < boardSize; i++)
-            // {
-            //     board[i] = new bool[boardSize];
-            //     shots[i] = new char[boardSize];
-            //     for(int j = 0; j < boardSize; j++)
-            //     {
-            //         board[i][j] = false;
-            //         shots[i][j] = ' ';
-            //     }
-            // }
-
             int shipSize =3;
             int maxCoordinate = boardSize - shipSize + 1;
 
-            Console.WriteLine("Skla skibet ligge Vandret (V) eler Lodret (L)?");
-            string direction = Console.ReadLine();
-            bool isHorizontal = direction.Equals("V", StringComparison.OrdinalIgnoreCase);
+            bool isFirstPlayer = true;
+
+            Console.WriteLine("\nSpiller 1 indtast dit navn \n");
+            player1.name = Console.ReadLine();
+            
+            Console.WriteLine("\nSpiller 1 indtast dit navn \n");
+            player2.name = Console.ReadLine();
 
 
-            // Skibets placering
-            Console.WriteLine("Hvor vil du ligge skibet (x-kordinat) 1-{0}", isHorizontal ? maxCoordinate : boardSize);
-            int shipX = int.Parse(Console.ReadLine())- 1;
+            for(int i=0; i<2; i++)
+            {
+                if(isFirstPlayer == true)
+                {
+                    Console.WriteLine("\n{0}'s tur! ", player1.name);
+                }
+                else
+                {
+                    Console.WriteLine("\n{0}'s tur! ", player2.name);
+                }
 
-            Console.WriteLine("Hvor vil du ligge skibet (y-kordinat) 1-{0}", isHorizontal ? boardSize : maxCoordinate);
-            int shipY = int.Parse(Console.ReadLine())- 1;
+                Console.WriteLine("\nSkla skibet ligge Vandret (V) eler Lodret (L)?");
+                string direction = Console.ReadLine();
+                bool isHorizontal = direction.Equals("V", StringComparison.OrdinalIgnoreCase);
+            
+            
+                // Skibets placering
+                int shipX = GetNumber(1,  isHorizontal ? maxCoordinate : boardSize, "\nHvor skal skibet ligge (x-kordinat)?") -1;
 
-            player.PlaceShip(isHorizontal, shipX, shipY);
+                int shipY = GetNumber(1, isHorizontal ? boardSize : maxCoordinate, "\nHvor skal skibet ligge (y-kordinat)?") -1;
 
-            // for (int i = 0; i < shipSize; i++)
-            // {
-            //     int x = isHorizontal 
-            //     ? shipX + i 
-            //     : shipX;
-            //     int y = isHorizontal
-            //     ? shipY
-            //     : shipY + i;
-            //     board[x][y] = true;
-            // }
+                if(isFirstPlayer == true)
+                {
+                player1.PlaceShip(isHorizontal, shipX, shipY);
+                }
+                else
+                {
+                    player2.PlaceShip(isHorizontal, shipX, shipY);
+                }
+                isFirstPlayer = false;
+            }
+
+
+            isFirstPlayer = true;
 
             bool isHit = false;
             bool isSunk = false;
-            while(isSunk == false)
+            while(!isSunk)
             {
-                Console.WriteLine("Hvor vil du skyde hen (x-koordinat)");
-                int ShootX = int.Parse(Console.ReadLine())- 1;
+                Player player;
+                if(isFirstPlayer == true)
+                {
+                    player = player1;
+                    isFirstPlayer = false;
+                    Console.WriteLine("{0}'s tur! ", player1.name);
+                }
+                else
+                {
+                    player = player2;
+                    isFirstPlayer = true;
+                    Console.WriteLine("{0}'s tur! ", player2.name);
+                }
 
-                Console.WriteLine("Hvor vil du skyde hen (y-koordinat)");
-                int ShootY = int.Parse(Console.ReadLine())- 1;
+                int ShootX = GetNumber(1, boardSize, "\nHvor vil du skyde hen (x-koordinat)") -1;
+
+                int ShootY = GetNumber(1, boardSize, "\nHvor vil du skyde hen (y-koordinat)") -1;
 
                 isHit = player.Shoot(ShootX,ShootY);
                 isSunk = player.HasLost();
 
-                // isHit = board[ShootX][shipY];
-                // board[shipX][ShootY] = false;
-                // isSunk = IsShipSunk(board);
-
-
-                // string hitText;
-                // if(isHit)
-                // {
-                //     shots[ShootX][ShootY] = 'X';
-                //     hitText = "Du ramte!!";
-                // }
-                // else
-                // {
-                //     shots[ShootX][ShootY] = '*';
-                //     hitText = "Du missede!!!";
-                // }
 
                 Console.Clear();
 
@@ -130,18 +123,39 @@ namespace mar14
                 Console.WriteLine();
             }
         }
-    //     static bool IsShipSunk(bool[][] board)
-    //     {
-    //         bool isNotSunk = false;
-    //         for (int x = 0; x < board.Length; x++)
-    //         {
-    //             var row = board[x];
-    //             for(int y = 0; y < row.Length; y++)
-    //             {
-    //                 isNotSunk |= row[y];
-    //             }
-    //         }
-    //         return isNotSunk == false;
-    //     }
+        public static int GetNumber(int min, int max, string message)
+        {
+            Console.WriteLine("{0} ({1}-{2})", message, min, max);
+            int number = 0;
+
+            bool isAccepted = false;
+            while(isAccepted == false)
+            {
+                string input = Console.ReadLine();
+                isAccepted = int.TryParse(input, out number) && 
+                number >= min && 
+                number <= max;
+
+                if(isAccepted == false)
+                {
+                    Console.WriteLine("Ugyldigt tegn - prøv igen");
+                }
+            }
+            return number;
+        }
+        
+        public static bool GetIsHorizontal()
+        {
+            Console.WriteLine("Vandret eller lodret?");
+            while(true)
+            {
+                string input = Console.ReadLine();
+                if(input.StartsWith("V", StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                Console.WriteLine("Ugyldigt tegn");
+            }
+        }
     }
 }
