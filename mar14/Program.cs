@@ -24,7 +24,7 @@ namespace mar14
             Console.WriteLine("\nSpiller 1 indtast dit navn \n");
             player1.name = Console.ReadLine();
             
-            Console.WriteLine("\nSpiller 1 indtast dit navn \n");
+            Console.WriteLine("\nSpiller 2 indtast dit navn \n");
             player2.name = Console.ReadLine();
 
 

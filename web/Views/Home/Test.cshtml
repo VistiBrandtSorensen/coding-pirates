@@ -1,0 +1,40 @@
+﻿@{
+
+    ViewData["Title"] = "Test";
+}
+@model mar14.Player
+
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<table>
+@for(int i=0; i<9; i++)
+{
+    <tr>
+    @for(int j=0; j<9; j++)
+    {
+        <td>
+            <div class="text-center" style"height:6em">
+                @if(Model.shots[j][i] == ' ')
+                {
+                    @Html.ActionLink("Skyd", "Test", "Home", new { x = j, y = i}, null)
+                    <!--@Html.ActionLink("Skyd", "Test", "Home", new { x = j, y = i}, null)-->
+                }
+                else
+                {
+                    @if (Model.shots[j][i] == '*')
+                    {
+                        <img src="/images/grøn.png" width="20" height="20" />
+                    }
+                    else
+                    {
+                        <img src="/images/kryds.png" width="20" height="20" />
+                    }
+                    <!--@Model.shots[j][i]-->
+                }
+            </div>
+        </td>
+    }
+    </tr>
+}
+</table>
